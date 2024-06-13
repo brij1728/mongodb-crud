@@ -7,7 +7,7 @@ export const Navbar = () => {
       <Link className="font-bold text-white" href="/">
         Home
       </Link>
-      <Link className="rounded bg-white p-2" href="/">
+      <Link className="rounded bg-white p-2" href="/addTopic">
         Add Topic
       </Link>
     </nav>
