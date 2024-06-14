@@ -1,31 +1,14 @@
-// src/components/TopicList/TopicList.tsx
-'use client';
-
-import React, { useEffect, useState } from 'react';
-
 import { HiPencilAlt } from 'react-icons/hi';
 import Link from 'next/link';
+import React from 'react';
 import { RemoveBtn } from '../ui';
 import { Topic } from '@/types';
-import { getTopics } from '../../services';
 
-export const TopicList: React.FC = () => {
-  const [topics, setTopics] = useState<Topic[]>([]);
+interface TopicListProps {
+  topics: Topic[];
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getTopics();
-      console.log('Fetched topics in component:', data);
-      if (Array.isArray(data)) {
-        setTopics(data);
-      } else {
-        console.error('Fetched data is not an array:', data);
-        setTopics([]);
-      }
-    };
-    fetchData();
-  }, []);
-
+export const TopicList: React.FC<TopicListProps> = ({ topics }) => {
   return (
     <>
       {Array.isArray(topics) && topics.length > 0 ? (

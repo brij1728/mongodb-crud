@@ -1,5 +1,9 @@
-import { TopicList } from '@/components';
+import { TopicsContainer } from '@/components';
 
 export default function Home() {
-  return <TopicList />;
+  return (
+    <>
+      <TopicsContainer />
+    </>
+  );
 }
