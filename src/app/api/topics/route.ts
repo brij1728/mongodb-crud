@@ -1,11 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { Topic } from '../../../../models';
-import { TopicInput } from '../../../types';
-import { connectMongoDB } from '../../../../libs';
+import { TopicInput } from '@/types';
+import { connectMongoDB } from '../../../../libs/mongodb';
+
+// Middleware to handle CORS
+const cors = async (req: NextRequest) => {
+  const headers = new Headers({
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Origin': '*', // Replace with specific origin if needed
+    'Access-Control-Allow-Methods': 'GET,OPTIONS,POST,DELETE',
+    'Access-Control-Allow-Headers':
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+  });
+
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { status: 200, headers });
+  }
+  return null;
+};
 
 export const POST = async (req: NextRequest) => {
   await connectMongoDB();
+  const corsResponse = await cors(req);
+  if (corsResponse) return corsResponse;
 
   try {
     const body = await req.json();
@@ -34,8 +52,10 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   await connectMongoDB();
+  const corsResponse = await cors(req);
+  if (corsResponse) return corsResponse;
 
   try {
     const topics = await Topic.find();
@@ -50,6 +70,8 @@ export const GET = async () => {
 
 export const DELETE = async (req: NextRequest) => {
   await connectMongoDB();
+  const corsResponse = await cors(req);
+  if (corsResponse) return corsResponse;
 
   try {
     const id = req.nextUrl.searchParams.get('id');
