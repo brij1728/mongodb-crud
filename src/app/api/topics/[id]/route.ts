@@ -48,4 +48,31 @@ export const PUT = async (
   }
 };
 
-export default PUT;
+export const GET = async (
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  await connectMongoDB();
+
+  const { id } = params;
+
+  try {
+    const topic = await Topic.findById(id).exec();
+
+    if (!topic) {
+      return NextResponse.json({ error: 'Topic not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      {
+        topic,
+      },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: 'Error fetching topic' },
+      { status: 500 }
+    );
+  }
+};
