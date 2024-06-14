@@ -13,7 +13,7 @@ export const PUT = async (
   const { id } = params;
 
   try {
-    const body: TopicType & { id: string } = await req.json();
+    const body: TopicType = await req.json();
     const { title, description } = body;
 
     if (!id || !title || !description) {

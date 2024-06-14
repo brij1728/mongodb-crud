@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { Topic } from '../../../../models';
-import { Topic as TopicType } from '../../../types';
+import { TopicInput } from '../../../types';
 import { connectMongoDB } from '../../../../libs';
 
 export const POST = async (req: NextRequest) => {
@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const body = await req.json();
-    const { title, description }: TopicType = body;
+    const { title, description }: TopicInput = body;
 
     if (!title || !description) {
       return NextResponse.json(
