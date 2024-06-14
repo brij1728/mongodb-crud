@@ -48,49 +48,6 @@ export const GET = async () => {
   }
 };
 
-export const PUT = async (req: NextRequest) => {
-  await connectMongoDB();
-
-  try {
-    const body = await req.json();
-    const {
-      id,
-      title,
-      description,
-    }: { id: string; title: string; description: string } = body;
-
-    if (!id || !title || !description) {
-      return NextResponse.json(
-        { error: 'ID, title, and description are required' },
-        { status: 400 }
-      );
-    }
-
-    const topic = await Topic.findByIdAndUpdate(
-      id,
-      { title, description },
-      { new: true }
-    );
-
-    if (!topic) {
-      return NextResponse.json({ error: 'Topic not found' }, { status: 404 });
-    }
-
-    return NextResponse.json(
-      {
-        message: 'Topic updated successfully',
-        topic,
-      },
-      { status: 200 }
-    );
-  } catch (error: unknown) {
-    return NextResponse.json(
-      { error: 'Error updating topic' },
-      { status: 500 }
-    );
-  }
-};
-
 export const DELETE = async (req: NextRequest) => {
   await connectMongoDB();
 
