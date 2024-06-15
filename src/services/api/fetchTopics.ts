@@ -11,7 +11,17 @@ export const getTopics = async (): Promise<Topic[]> => {
 
     const data = await response.json();
     console.log('Fetched topics from API:', data);
-    return data.topics;
+
+    // Transform the data to match the Topic interface
+    const topics: Topic[] = data.topics.map(
+      (topic: { _id: string; title: string; description: string }) => ({
+        id: topic._id,
+        title: topic.title,
+        description: topic.description,
+      })
+    );
+
+    return topics;
   } catch (error) {
     console.error('Error fetching topics:', error);
     return [];
