@@ -25,7 +25,7 @@ export const TopicList: React.FC<TopicListProps> = ({ topics }) => {
                   <div>{topic.description}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <RemoveBtn />
+                  <RemoveBtn id={topic.id} title={topic.title} />
                   <Link href={`/editTopic/${topic.id}`}>
                     <HiPencilAlt size={24} />
                   </Link>
