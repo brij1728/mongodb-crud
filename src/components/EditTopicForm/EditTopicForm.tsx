@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Topic } from '@/types';
 import { editTopic } from '@/services/api/editTopic';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface EditTopicFormProps {
   topic: Topic | undefined;
@@ -65,3 +65,5 @@ export const EditTopicForm: React.FC<EditTopicFormProps> = ({ topic }) => {
     </form>
   );
 };
+
+export default EditTopicForm;
