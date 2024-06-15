@@ -9,6 +9,10 @@ export const deleteTopic = async (id: string): Promise<void> => {
     });
 
     if (!response.ok) {
+      const errorMessage = await response.text();
+      console.error(
+        `Failed to delete topic. Status: ${response.status}, Message: ${errorMessage}`
+      );
       throw new Error('Failed to delete topic');
     }
 

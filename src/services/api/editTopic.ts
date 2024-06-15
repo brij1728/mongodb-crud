@@ -8,11 +8,18 @@ export const editTopic = async (topic: Topic): Promise<Topic> => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(topic),
+      body: JSON.stringify({
+        title: topic.title,
+        description: topic.description,
+      }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to edit topic');
+      const errorMessage = await response.text();
+      console.error(
+        `Failed to edit topic. Status: ${response.status}, Message: ${errorMessage}`
+      );
+      throw new Error(`Failed to edit topic. Status: ${response.status}`);
     }
 
     const data = await response.json();
