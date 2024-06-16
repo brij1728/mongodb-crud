@@ -1,6 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = (req: NextApiRequest, res: NextApiResponse) => {
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  res.status(200).json({ ip });
+export const GET = async (request: NextRequest) => {
+  const ip =
+    request.headers.get('x-forwarded-for') ||
+    request.ip ||
+    request.headers.get('x-real-ip') ||
+    'IP not found';
+  return NextResponse.json({ ip });
 };
